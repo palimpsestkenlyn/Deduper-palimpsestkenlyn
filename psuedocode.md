@@ -17,13 +17,15 @@ Reads whose UMI is not in the list of 96 known UMIs (STL96.txt) are discarded.
 
 ## Functions
 
+```
 def get_umi(qname: str) -> str:
     '''take the QNAME (column 1) of a SAM line and pull out the UMI, which is the last field after the final ":"'''
     split qname on ":" and keep the last piece
     returns the UMI as a string
 Input: NS500451:154:HWKTMBGXX:1:11101:25071:87858:TAGCAAGG
 Expected output: TAGCAAGG
-
+```
+```
 def get_strand(flag: int) -> str:
     '''take the FLAG (column 2) of a SAM line and decide which strand the read is on using bit 16'''
     if (flag & 16) == 16:
@@ -35,7 +37,7 @@ Input: 0
 Expected output: +
 Input: 16
 Expected output: -
-
+```
 
 logic for calculating 5' position. where on the genome does this read really start?
 
@@ -48,6 +50,7 @@ That comes down to two things:
     * Plus: POS is the left => 5' end on + strand. When bases are soft clipped on the left POS != 5' position. If left soft clipped, subtract or back up by the genome positions by the number of soft clipped bases to find true 5'
     * Minus: POS is the left => 3' end on - strand. have to go from POS all the way to the right end (up genome positions), counting everything the read covers on the genome (including right soft clips), to find the 5' position which is the right most end base. Add up all the occupied/marked positions from POS going right. Left soft clips don't count/matter. Insertions don't count(?). 5' position = POS + that total - 1 (minus 1 because POS itself is the first position counted)
 
+```
 def get_five_prime_start(pos: int, cigar: str, strand: str) -> int:
     '''take POS (column 4), CIGAR (column 6), and strand, and return the true 5' start of the read, adjusted for soft clipping and, on the minus strand, for everything the read covers on the genome'''
     break the CIGAR into number/letter pairs #ex: 3S68M becomes (3, S) and (68, M)
@@ -72,7 +75,7 @@ Input: 76718924, "69M2S", "-"
 Expected output: 76718994
 Input: 76875969, "2S13M470N56M", "-"
 Expected output: 76876507
-
+```
 
 ## Pseudocode 
 
