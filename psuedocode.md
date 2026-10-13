@@ -79,6 +79,7 @@ Expected output: 76876507
 
 ## Pseudocode 
 
+```
 Loop through the known UMI file (STL96.txt) to create a set: umi_set
 
 dup_info = (umi, strand, five_prime_start) for a read to be held for comparison
@@ -114,3 +115,4 @@ Loop through input sam one line at a time:
                 write the line to output sam #write out the first occurence 
 
 Close both files
+```
