@@ -50,7 +50,7 @@ Given a SAM file of uniquely mapped reads, and a text file containing the known 
     - Choice of duplicate written to file
     
 You MUST:
-- Write Python 3.12 compatible code
+- Write Python 3.14 compatible code
 - Include the following argparse options
     - ```-f```, ```--file```: designates absolute file path to sorted sam file
     - ```-o```, ```--outfile```: designates absolute file path to deduplicated sam file
